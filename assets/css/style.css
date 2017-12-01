@@ -1,0 +1,37 @@
+/*body {
+	background-image: 
+}*/
+
+h1 {
+	font-size: 28px;
+	text-align: center;
+}
+
+#animals-form {
+	float: right;
+	display: inline-grid;
+	margin-right: 100px;
+}
+
+#add-animals {
+	background-color: #12AB23; 
+	color: #fff;
+}
+
+.animal {
+	background-color: #12AB23;
+	border-radius: 2px solid #cbcbcb;
+	border: thick;
+	color: #fff;
+}
+
+button,
+div,
+form,
+input {
+    margin: 10px;
+}
+
+#gifs-appear-here {
+	display: inline-table;
+}
