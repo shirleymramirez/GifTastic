@@ -1,84 +1,90 @@
 $(document).ready(function(){
 
-	// Initial array of animals
-	var animals = ["Dogs","Cats","Pigs", "Rooster", "Fish", "Zebra", "Lion", "Tiger", "Elephants", "Rhinocerous"];
-	
-	
 	// Function for displaying animal data
     function renderButtons() {
+    // Initial array of animals
+    var animals = ["Dogs","Cats","Pigs", "Rooster", "Fish", "Zebra", "Lion", "Tiger", "Elephants", "Rhinocerous"];
+  
     	$("#animals-view").empty();
-
     	for (var i = 0; i < animals.length; i++) {
-    	 	var a = $("<button>");
-    	 	a.addClass("animal");
-		 	a.attr("data-name", animals[i]);
-		 	a.text(animals[i]);
-		 	$("#animals-view").append(a);
+    	 	renderButton(animals[i]);
     	}
+    }
+
+    function renderButton(animalText) {
+      var b = $("<button>");
+      b.addClass("animal");
+      b.attr("data-name", animalText);
+      b.text(animalText);
+      $("#animals-view").append(b);
     }
 
     $("#add-animals").on("click", function(event) {
     	event.preventDefault();
     	var animal = $("#animals-input").val().trim();
-    	animals.push(animal);
-    	renderButtons();
-    	// searchAnimals();
+    	renderButton(animal);
+    	
     });
     renderButtons();
-    // searchAnimals();
    
-   // Adding click event listen listener to all buttons
-    $("button").on("click", function(event) {
-        // Grabbing and storing the data-animal property value from the button
-        var animalPet = $(this).attr("data-name");
-        console.log(animalPet);
+    // Adding click event listen listener to all buttons
+    $(document).on("click", ".animal", function(event) {
 
-        // Constructing a queryURL using the animal name
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-        animalPet + "&api_key=dc6zaTOxFJmzC&limit=10";
+      var animalName = $(this).attr("data-name");
+      console.log(animalName);
 
-        // Performing an AJAX request with the queryURL
-      $.ajax({
+      var authKey = "4qkKoj8RJIwGvZPFpcpRPgFC2VxmyuNK";
+      console.log(authKey);
+
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+      animalName + "&api_key=" +  authKey + "&limit=10";
+
+
+      $("#gifs-appear-here").empty();
+
+       $.ajax({
           url: queryURL,
-          method: "GET"
-        })
-
-        // After data comes back from the request
+          method: "GET"    
+          })
         .done(function(response) {
-          console.log(queryURL);
-
           console.log(response);
-          // storing the data from the AJAX request in the results variable
-          var results = response.data;
-          console.log(results);
+          var results = response.data;  
 
-          // Looping through each result item
           for (var i = 0; i < results.length; i++) {
-
-            // Creating and storing a div tag
             var animalDiv = $("<div>");
+            var animatedSrc = results[i].images.fixed_height.url;
+            var stillSrc = results[i].images.fixed_height_still.url;
+            var showImage = $("<img>");
+            var rating = results[i].rating;
+            var p = $("<p>").text("Rating: " + rating);
 
-            // Creating a paragraph tag with the result item's rating
-            var p = $("<p>").text("Rating: " + results[i].rating);
+            showImage.attr("src", results[i].images.fixed_height.url);
 
-            // Creating and storing an image tag
-            var animalImage = $("<img>");
-            // Setting the src attribute of the image to a property pulled off the result item
-            animalImage.attr("src", results[i].images.fixed_height.url);
-
-            // Appending the paragraph and image tag to the animalDiv
+            showImage.addClass("animate");
+            showImage.attr("data-state", "animate");
+            showImage.attr("data-still", stillSrc);
+            showImage.attr("data-animate", animatedSrc);
             animalDiv.append(p);
-            animalDiv.append(animalImage);
-
-            // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div
+            animalDiv.append(showImage);
             $("#gifs-appear-here").prepend(animalDiv);
-
-            renderButtons();
           }
-          
-      });
 
+        });
+    
     });
 
+    $("#gifs-appear-here").on("click", ".animate", function(event) {
+
+        var state = $(this).attr("data-state");
+        console.log(state);
+        if(state==="still"){
+          $(this).attr("src", $(this).attr("data-animate"));
+          $(this).attr("data-state","animate");
+        } else {
+          $(this).attr("src",$(this).attr("data-still"));
+          $(this).attr("data-state", "still");
+        }
+      
+      });
 
 });
