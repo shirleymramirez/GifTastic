@@ -42,7 +42,7 @@ $(document).ready(function(){
 
       //check if $animal has a valid value
       // debugger;
-      if ( $animal.length === 0 && $animal.length === ) {
+      if ( $animal.length === 0 ) {
         renderButtons();
       } else {
          //call renderButton and passing an argument animal
