@@ -67,7 +67,6 @@ $(document).ready(function(){
       //clear id gifs-appear-here before calling query .ajax() before populating new set of images
       $("#gifs-appear-here").empty();
 
-
        $.ajax({
           url: queryURL,
           method: "GET"    
