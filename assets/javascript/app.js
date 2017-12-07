@@ -23,7 +23,7 @@ $(document).ready(function(){
       //created button object elements
       //added a class animal 
       //set value of animalText argument to the data-name attr
-      //append value of b to id animals-view in the html page
+      //append to id animals-view in the html page
         $("<button>", {
           class: "animal",
           "data-name": animalText,
