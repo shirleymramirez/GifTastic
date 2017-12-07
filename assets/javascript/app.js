@@ -41,7 +41,6 @@ $(document).ready(function(){
     	var $animal = $("#animals-input").val().trim();
 
       //check if $animal has a valid value
-      // debugger;
       if ( $animal.length !== 0 ) {
         //call renderButton and pass an argument animal
         renderButton($animal);      
@@ -127,7 +126,7 @@ $(document).ready(function(){
         var $state = $(this).attr("data-state");
         
         //Checks state condition to still or animate then change the state  
-        if($state==="still"){
+        if($state === "still"){
           $(this).attr("src", $(this).attr("data-animate"));
           $(this).attr("data-state","animate");
         } else {
