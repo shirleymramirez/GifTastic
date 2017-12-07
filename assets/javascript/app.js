@@ -73,10 +73,10 @@ $(document).ready(function(){
           })
         .done(function(response) {
 
-          //
+          // store data from response to new var results
           var $results = response.data;  
 
-          //
+          // loop throuch all response data length
           for (var i = 0; i < $results.length; i++) {
 
             //created new div tag and store it in a new var animalDiv
